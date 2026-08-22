@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+/* Prevent the browser's own pinch/scroll gestures from fighting our
+   canvas pan + zoom handlers. */
+canvas {
+  touch-action: none;
+}

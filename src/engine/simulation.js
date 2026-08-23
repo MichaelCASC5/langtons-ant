@@ -18,6 +18,7 @@ export function createSimulation() {
   return {
     grid: createGrid(),
     ants: [],
+    spawners: [],
     rule: DEFAULT_RULE,
     colors: DEFAULT_COLORS,
     stepCount: 0,
@@ -40,6 +41,17 @@ export function removeAntNear(sim, x, y) {
   if (index !== -1) sim.ants.splice(index, 1);
 }
 
+export function removeAntDuplicates(sim) {
+  console.log("removeAntDuplicates fired")
+  for (let i = 0; i < sim.ants.length; i++) {
+    for (let j = i + 1; j < sim.ants.length; j++) {
+      if (sim.ants[i].x == sim.ants[j].x && sim.ants[i].y == sim.ants[j].y) {
+        removeAntNear(sim, sim.ants[i].x, sim.ants[i].y)
+      }
+    }
+  }
+}
+
 export function paintCell(sim, x, y, state) {
   setCell(sim.grid, x, y, state);
 }
@@ -47,6 +59,7 @@ export function paintCell(sim, x, y, state) {
 export function resetSimulation(sim) {
   clearGrid(sim.grid);
   sim.ants = [];
+  // sim.spawners = [];
   sim.stepCount = 0;
 }
 
@@ -54,6 +67,19 @@ export function resetSimulation(sim) {
 // the cell it's standing on, turns according to the rule for that
 // state, flips the cell to the next state, then moves forward.
 export function stepSimulation(sim) {
+  removeAntDuplicates(sim)
+
+  // Spawn ants perpetually at spawners
+  for (const spawner of sim.spawners) {
+    console.log("spawner:")
+    console.log(spawner)
+
+    if (Math.floor(Math.random() * 100) < 1) {
+      addAnt(sim, spawner[0], spawner[1], null, 0)
+    }
+  }
+
+  // Move the ants
   const numStates = sim.rule.length;
   for (const ant of sim.ants) {
     
@@ -77,7 +103,7 @@ export function stepSimulation(sim) {
     }
 
     // If an ant goes out of bounds, destroy it
-    if ((ant.x < -100 || ant.x > 100) && (ant.y < -100 || ant.y > 100)) {
+    if ((ant.x < -100 || ant.x > 100) || (ant.y < -100 || ant.y > 100)) {
       removeAntNear(sim, ant.x, ant.y)
     }
   }

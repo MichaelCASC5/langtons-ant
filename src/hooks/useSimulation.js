@@ -103,7 +103,7 @@ export function useSimulation(canvasRef) {
 
   const addAntAt = useCallback(
     (x, y) => {
-      addAnt(simRef.current, x, y);
+      addAnt(simRef.current, x, y, null, Math.floor(Math.random() * 5) + 0);
       setAntCount(simRef.current.ants.length);
     },
     []

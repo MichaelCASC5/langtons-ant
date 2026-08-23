@@ -8,8 +8,8 @@ const HEADING_DELTAS = [
 
 let nextAntId = 1;
 
-export function createAnt(x, y, heading = 0) {
-  return { id: nextAntId++, x, y, heading };
+export function createAnt(x, y, heading = 0, color) {
+  return { id: nextAntId++, x, y, heading, color };
 }
 
 // turn is "R", "L", or "N" (no turn) / "U" (u-turn) — the classic rule
@@ -25,4 +25,10 @@ export function stepAntForward(ant) {
   const { dx, dy } = HEADING_DELTAS[ant.heading];
   ant.x += dx;
   ant.y += dy;
+}
+
+export function stepAntLinearly(ant) {
+  // const { dx, dy } = HEADING_DELTAS[ant.heading];
+  // ant.x += 0;
+  ant.y += 1;
 }

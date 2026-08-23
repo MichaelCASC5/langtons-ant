@@ -1,5 +1,5 @@
 import { createGrid, getCell, setCell, clearGrid } from "./grid.js";
-import { createAnt, turnAnt, stepAntForward } from "./ant.js";
+import { createAnt, turnAnt, stepAntForward, stepAntLinearly } from "./ant.js";
 
 // A palette of state colors. Index 0 is always "empty" and is never
 // drawn (the canvas background shows through). Extend this array to
@@ -29,8 +29,8 @@ export function setRule(sim, rule) {
   sim.rule = cleaned.length > 0 ? cleaned : DEFAULT_RULE;
 }
 
-export function addAnt(sim, x, y, heading = 0) {
-  const ant = createAnt(x, y, heading);
+export function addAnt(sim, x, y, heading = 0, color) {
+  const ant = createAnt(x, y, heading, color);
   sim.ants.push(ant);
   return ant;
 }
@@ -56,12 +56,30 @@ export function resetSimulation(sim) {
 export function stepSimulation(sim) {
   const numStates = sim.rule.length;
   for (const ant of sim.ants) {
-    const state = getCell(sim.grid, ant.x, ant.y);
-    const turn = sim.rule[state % numStates];
-    turnAnt(ant, turn);
-    const nextState = (state + 1) % numStates;
-    setCell(sim.grid, ant.x, ant.y, nextState);
-    stepAntForward(ant);
+    
+    const cell = getCell(sim.grid, ant.x, ant.y);
+    const state = cell[0]
+
+    // If the ant has no color yet assigned, it is not to build nor move as an ant should
+    if (ant.color != 0) {
+      const turn = sim.rule[state % numStates];
+      turnAnt(ant, turn);
+      const nextState = (state + 1) % numStates;
+      console.log("stepSimulation:")
+      console.log(state)
+
+      setCell(sim.grid, ant.x, ant.y, nextState, ant.color);
+      stepAntForward(ant);
+    } else {
+      stepAntLinearly(ant);
+      if (state == 1)
+        ant.color = cell[1]
+    }
+
+    // If an ant goes out of bounds, destroy it
+    if ((ant.x < -100 || ant.x > 100) && (ant.y < -100 || ant.y > 100)) {
+      removeAntNear(sim, ant.x, ant.y)
+    }
   }
   sim.stepCount += 1;
 }

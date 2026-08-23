@@ -12,16 +12,19 @@ function key(x, y) {
 
 export function getCell(grid, x, y) {
   const value = grid.get(key(x, y));
-  return value === undefined ? 0 : value;
+  console.log("getCell:")
+  console.log(value)
+  // return value === undefined ? 0 : value[0];
+  return value === undefined ? [0,0] : value
 }
 
-export function setCell(grid, x, y, state) {
+export function setCell(grid, x, y, state, color) {
   if (state === 0) {
     // Storing zeros would defeat the point of a sparse grid, so an
     // explicit reset to "empty" just deletes the entry.
     grid.delete(key(x, y));
   } else {
-    grid.set(key(x, y), state);
+    grid.set(key(x, y), [state, color]);
   }
 }
 
@@ -32,10 +35,10 @@ export function clearGrid(grid) {
 // Iterates only the cells that have actually been set — used by the
 // renderer so drawing cost tracks "ink on the page", not grid size.
 export function forEachCell(grid, callback) {
-  for (const [k, state] of grid) {
+  for (const [k, [state, color]] of grid) {
     const commaIndex = k.indexOf(",");
     const x = Number(k.slice(0, commaIndex));
     const y = Number(k.slice(commaIndex + 1));
-    callback(x, y, state);
+    callback(x, y, state, color);
   }
 }

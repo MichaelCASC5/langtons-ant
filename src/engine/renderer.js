@@ -19,11 +19,11 @@ export function drawFrame(ctx, canvas, sim, camera) {
     drawGridLines(ctx, width, height, camera, size);
   }
 
-  forEachCell(sim.grid, (gx, gy, state) => {
+  forEachCell(sim.grid, (gx, gy, state, color) => {
     if (state === 0) return;
     const { px, py } = gridToScreen(camera, width, height, gx, gy);
     if (px + size < 0 || py + size < 0 || px > width || py > height) return;
-    ctx.fillStyle = sim.colors[state] ?? sim.colors[1];
+    ctx.fillStyle = sim.colors[color] ?? sim.colors[1];
     ctx.fillRect(Math.floor(px), Math.floor(py), Math.ceil(size), Math.ceil(size));
   });
 

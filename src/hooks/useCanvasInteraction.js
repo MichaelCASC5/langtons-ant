@@ -33,10 +33,14 @@ export function useCanvasInteraction(canvasRef, simulation, mode, selectedState,
         const { cx, cy } = screenToCell(simulation.cameraRef.current, canvas.width, canvas.height, px, py);
         simulation.addAntAt(cx, cy);
         simulation.redraw();
+      } else if (mode === "place-spawner") {
+        const { cx, cy } = screenToCell(simulation.cameraRef.current, canvas.width, canvas.height, px, py);
+        simulation.addSpawnerAt(cx, cy);
+        simulation.redraw();
       } else if (mode === "paint") {
         isPaintingRef.current = true;
         paintAt(e);
-      } else {
+      } else { // for any mode whose behavior is unspecified, use as a pan
         isDraggingRef.current = true;
         lastPointerRef.current = { x: e.clientX, y: e.clientY };
       }

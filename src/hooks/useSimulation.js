@@ -4,6 +4,7 @@ import {
   stepSimulation,
   resetSimulation,
   addAnt,
+  addSpawner,
   paintCell,
   setRule,
   DEFAULT_RULE,
@@ -109,6 +110,14 @@ export function useSimulation(canvasRef) {
     []
   );
 
+  const addSpawnerAt = useCallback(
+    (x, y) => {
+      addSpawner(simRef.current, x, y, null, Math.floor(Math.random() * 5) + 0);
+      // setSpawnerCount(simRef.current.ants.length);
+    },
+    []
+  );
+
   const paintCellAt = useCallback((x, y, state, color) => {
     paintCell(simRef.current, x, y, state, color);
   }, []);
@@ -130,6 +139,7 @@ export function useSimulation(canvasRef) {
     changeSpeed,
     changeRule,
     addAntAt,
+    addSpawnerAt,
     paintCellAt,
     redraw,
   };

@@ -21,15 +21,15 @@ export default function Home() {
   const { isFullscreen, toggleFullscreen } = useFullscreen(rootRef);
 
   const [showHero, setShowHero] = useState(true);
-  const [mode, setMode] = useState("place-ant");
+  const [mode, setMode] = useState("place-ant"); // decides what mode to start with
   const [selectedState, setSelectedState] = useState(1);
   const [selectedColor, setSelectedColor] = useState(1);
   const [isSettingsOpen, setSettingsOpen] = useState(false);
   const [isInfoOpen, setInfoOpen] = useState(false);
-console.log("state:")
-console.log(selectedState)
-console.log("color")
-console.log(selectedColor)
+// console.log("state:")
+// console.log(selectedState)
+// console.log("color")
+// console.log(selectedColor)
   return (
     <MainLayout>
       <div ref={rootRef} className="relative h-full w-full">

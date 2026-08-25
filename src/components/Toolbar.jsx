@@ -8,6 +8,7 @@
 const MODES = [
   { id: "pan", icon: "M13 6l6 6l-6 6M5 6l6 6l-6 6", label: "Pan" },
   { id: "place-ant", icon: "M12 2a4 4 0 100 8 4 4 0 000-8z", label: "Place ant" },
+  { id: "place-spawner", icon: "M12 2a4 4 0 100 8 4 4 0 000-8z", label: "Place spawner" },
   { id: "paint", icon: "M3 21l3-3m0 0l9-9 3 3-9 9-3 0z", label: "Paint" },
   { id: "select-material", icon: "M3 21l3-3m0 0l9-9 3 3-9 9-3 0z", label: "Select Material" },
 ];
@@ -26,7 +27,7 @@ export default function Toolbar({ mode, onModeChange, colors, selectedColor, onS
             mode === m.id ? "bg-white/15 text-white" : "text-white/60 hover:bg-white/10 hover:text-white"
           }`}
         >
-          <ModeIcon id={m.id} />
+          <ModeIcon mode={m}/>
         </button>
       ))}
 
@@ -54,24 +55,40 @@ export default function Toolbar({ mode, onModeChange, colors, selectedColor, onS
   );
 }
 
-function ModeIcon({ id }) {
+function ModeIcon({ mode }) {
+  const id = mode.id
+  const iconPath = mode.icon
+
+  console.log(`ModeIcon() fired. id: ${id}, iconPath: ${iconPath}`)
   if (id === "pan") {
     return (
       <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2">
-        <path d="M12 2v20M2 12h20" strokeLinecap="round" />
+        {/* <path d="M12 2v20M2 12h20" strokeLinecap="round" /> */}
+        <path d={iconPath} strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     );
   }
   if (id === "place-ant") {
     return (
       <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor">
+        {/* <circle cx="12" cy="12" r="5" /> */}
+        <path d={iconPath} />
+      </svg>
+    );
+  }
+  if (id === "place-spawner") {
+    return (
+      <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor">
         <circle cx="12" cy="12" r="5" />
       </svg>
     );
   }
+
+  // Draw any other icon using this:
   return (
     <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2">
-      <path d="M3 21l3-3m0 0l9-9 3 3-9 9H6z" strokeLinecap="round" strokeLinejoin="round" />
+      {/* <path d="M3 21l3-3m0 0l9-9 3 3-9 9H6z" strokeLinecap="round" strokeLinejoin="round" /> */}
+      <path d={iconPath} />
     </svg>
   );
 }

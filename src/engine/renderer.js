@@ -30,6 +30,10 @@ export function drawFrame(ctx, canvas, sim, camera) {
   for (const ant of sim.ants) {
     drawAnt(ctx, width, height, camera, size, ant);
   }
+
+  for (const spawner of sim.spawners) {
+    drawSpawner(ctx, width, height, camera, size, spawner);
+  }
 }
 
 function drawGridLines(ctx, width, height, camera, size) {
@@ -69,6 +73,29 @@ function drawAnt(ctx, width, height, camera, size, ant) {
   ctx.moveTo(0, -r);
   ctx.lineTo(r * 0.7, r * 0.7);
   ctx.lineTo(-r * 0.7, r * 0.7);
+  ctx.closePath();
+  ctx.fill();
+  ctx.restore();
+}
+
+// Draws a small circle around the position of a spawner
+function drawSpawner(ctx, width, height, camera, size, ant) {
+  const { px, py } = gridToScreen(camera, width, height, ant.x, ant.y);
+  if (px + size < 0 || py + size < 0 || px > width || py > height) return;
+
+  const cx = px + size / 2;
+  const cy = py + size / 2;
+  const r = size * 0.55;
+
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.fillStyle = "transparent"
+  ctx.beginPath();
+  ctx.beginPath();
+  ctx.arc(0, 0, 2 * r, 0, 2 * Math.PI);
+  ctx.lineWidth = 2
+  ctx.strokeStyle = "rgba(220, 220, 220)"
+  ctx.stroke();
   ctx.closePath();
   ctx.fill();
   ctx.restore();

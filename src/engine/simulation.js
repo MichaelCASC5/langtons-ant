@@ -1,5 +1,6 @@
 import { createGrid, getCell, setCell, clearGrid } from "./grid.js";
 import { createAnt, turnAnt, stepAntForward, stepAntLinearly } from "./ant.js";
+import { createSpawner } from "./spawner.js";
 
 // A palette of state colors. Index 0 is always "empty" and is never
 // drawn (the canvas background shows through). Extend this array to
@@ -36,6 +37,12 @@ export function addAnt(sim, x, y, heading = 0, color) {
   return ant;
 }
 
+export function addSpawner(sim, x, y, color) {
+  const spawner = createSpawner(x, y, color);
+  sim.spawners.push(spawner);
+  return spawner;
+}
+
 export function removeAntNear(sim, x, y) {
   const index = sim.ants.findIndex((a) => a.x === x && a.y === y);
   if (index !== -1) sim.ants.splice(index, 1);
@@ -57,9 +64,9 @@ export function paintCell(sim, x, y, state, color) {
 }
 
 export function resetSimulation(sim) {
-  clearGrid(sim.grid);
   sim.ants = [];
-  // sim.spawners = [];
+  sim.spawners = [];
+  clearGrid(sim.grid)
   sim.stepCount = 0;
 }
 
@@ -67,15 +74,16 @@ export function resetSimulation(sim) {
 // the cell it's standing on, turns according to the rule for that
 // state, flips the cell to the next state, then moves forward.
 export function stepSimulation(sim) {
+  
   removeAntDuplicates(sim)
 
   // Spawn ants perpetually at spawners
+  console.log("spawners:")
   for (const spawner of sim.spawners) {
-    console.log("spawner:")
     console.log(spawner)
 
     if (Math.floor(Math.random() * 100) < 1) {
-      addAnt(sim, spawner[0], spawner[1], null, 0)
+      addAnt(sim, spawner.x, spawner.y, null, 0)
     }
   }
 
@@ -107,5 +115,6 @@ export function stepSimulation(sim) {
       removeAntNear(sim, ant.x, ant.y)
     }
   }
+
   sim.stepCount += 1;
 }

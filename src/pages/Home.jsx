@@ -23,21 +23,26 @@ export default function Home() {
   const [showHero, setShowHero] = useState(true);
   const [mode, setMode] = useState("place-ant");
   const [selectedState, setSelectedState] = useState(1);
+  const [selectedColor, setSelectedColor] = useState(1);
   const [isSettingsOpen, setSettingsOpen] = useState(false);
   const [isInfoOpen, setInfoOpen] = useState(false);
-
+console.log("state:")
+console.log(selectedState)
+console.log("color")
+console.log(selectedColor)
   return (
     <MainLayout>
       <div ref={rootRef} className="relative h-full w-full">
-        <SimulationCanvas canvasRef={canvasRef} simulation={simulation} mode={mode} selectedState={selectedState} />
+        <SimulationCanvas canvasRef={canvasRef} simulation={simulation} mode={mode} selectedState={selectedState} selectedColor={selectedColor}/>
 
         <div className="pointer-events-none absolute inset-0 z-10">
           <Toolbar
             mode={mode}
             onModeChange={setMode}
             colors={simulation.colors}
-            selectedState={selectedState}
-            onSelectColor={setSelectedState}
+            // selectedState={selectedState}
+            selectedColor={selectedColor}
+            onSelectColor={setSelectedColor}
           />
 
           <StatsPanel antCount={simulation.antCount} stepCount={simulation.stepCount} />

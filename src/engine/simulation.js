@@ -52,8 +52,8 @@ export function removeAntDuplicates(sim) {
   }
 }
 
-export function paintCell(sim, x, y, state) {
-  setCell(sim.grid, x, y, state);
+export function paintCell(sim, x, y, state, color) {
+  setCell(sim.grid, x, y, state, color);
 }
 
 export function resetSimulation(sim) {

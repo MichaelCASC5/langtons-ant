@@ -109,8 +109,8 @@ export function useSimulation(canvasRef) {
     []
   );
 
-  const paintCellAt = useCallback((x, y, state) => {
-    paintCell(simRef.current, x, y, state);
+  const paintCellAt = useCallback((x, y, state, color) => {
+    paintCell(simRef.current, x, y, state, color);
   }, []);
 
   return {

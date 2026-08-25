@@ -9,9 +9,10 @@ const MODES = [
   { id: "pan", icon: "M13 6l6 6l-6 6M5 6l6 6l-6 6", label: "Pan" },
   { id: "place-ant", icon: "M12 2a4 4 0 100 8 4 4 0 000-8z", label: "Place ant" },
   { id: "paint", icon: "M3 21l3-3m0 0l9-9 3 3-9 9-3 0z", label: "Paint" },
+  { id: "select-material", icon: "M3 21l3-3m0 0l9-9 3 3-9 9-3 0z", label: "Select Material" },
 ];
 
-export default function Toolbar({ mode, onModeChange, colors, selectedState, onSelectColor }) {
+export default function Toolbar({ mode, onModeChange, colors, selectedColor, onSelectColor }) {
   return (
     <div className="pointer-events-auto absolute left-4 top-4 flex items-center gap-1 rounded-lg border border-white/10 bg-black/60 p-1.5 backdrop-blur-sm">
       {MODES.map((m) => (
@@ -29,19 +30,19 @@ export default function Toolbar({ mode, onModeChange, colors, selectedState, onS
         </button>
       ))}
 
-      {mode === "paint" && (
+      {mode === "select-material" && (
         <>
           <div className="mx-1 h-5 w-px bg-white/15" />
           {colors.slice(1).map((color, i) => {
-            const stateIndex = i + 1;
+            const colorIndex = i + 1;
             return (
               <button
-                key={stateIndex}
+                key={colorIndex}
                 type="button"
-                aria-label={`Paint color ${stateIndex}`}
-                onClick={() => onSelectColor(stateIndex)}
+                aria-label={`Paint color ${colorIndex}`}
+                onClick={() => onSelectColor(colorIndex)}
                 className={`h-6 w-6 rounded-md border-2 transition-transform ${
-                  selectedState === stateIndex ? "scale-110 border-white" : "border-transparent"
+                  selectedColor === colorIndex ? "scale-110 border-white" : "border-transparent"
                 }`}
                 style={{ backgroundColor: color }}
               />

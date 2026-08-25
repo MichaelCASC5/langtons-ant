@@ -11,10 +11,10 @@ import { useCanvasInteraction } from "../hooks/useCanvasInteraction.js";
 // canvasRef is created by the parent (Home.jsx) and also handed to
 // useSimulation, so both the drawing loop and this component are
 // talking to the exact same <canvas> DOM node.
-export default function SimulationCanvas({ canvasRef, simulation, mode, selectedState }) {
+export default function SimulationCanvas({ canvasRef, simulation, mode, selectedState, selectedColor }) {
   const containerRef = useRef(null);
 
-  useCanvasInteraction(canvasRef, simulation, mode, selectedState);
+  useCanvasInteraction(canvasRef, simulation, mode, selectedState, selectedColor);
 
   useEffect(() => {
     const container = containerRef.current;

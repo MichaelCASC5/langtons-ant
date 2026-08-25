@@ -4,7 +4,7 @@ import { panBy, zoomAt, screenToCell } from "../engine/camera.js";
 // Wires pointer + wheel events on the canvas to camera pan/zoom and
 // simulation actions (placing ants, painting cells). "mode" decides
 // what a click does; the wheel always zooms, regardless of mode.
-export function useCanvasInteraction(canvasRef, simulation, mode, selectedState) {
+export function useCanvasInteraction(canvasRef, simulation, mode, selectedState, selectedColor) {
   const isDraggingRef = useRef(false);
   const isPaintingRef = useRef(false);
   const lastPointerRef = useRef({ x: 0, y: 0 });
@@ -21,7 +21,7 @@ export function useCanvasInteraction(canvasRef, simulation, mode, selectedState)
     function paintAt(e) {
       const { px, py } = canvasPoint(e);
       const { cx, cy } = screenToCell(simulation.cameraRef.current, canvas.width, canvas.height, px, py);
-      simulation.paintCellAt(cx, cy, selectedState);
+      simulation.paintCellAt(cx, cy, selectedState, selectedColor);
       simulation.redraw();
     }
 

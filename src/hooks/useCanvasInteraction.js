@@ -31,11 +31,11 @@ export function useCanvasInteraction(canvasRef, simulation, mode, selectedState,
 
       if (mode === "place-ant") {
         const { cx, cy } = screenToCell(simulation.cameraRef.current, canvas.width, canvas.height, px, py);
-        simulation.addAntAt(cx, cy);
+        simulation.addAntAt(cx, cy, selectedColor);
         simulation.redraw();
       } else if (mode === "place-spawner") {
         const { cx, cy } = screenToCell(simulation.cameraRef.current, canvas.width, canvas.height, px, py);
-        simulation.addSpawnerAt(cx, cy);
+        simulation.addSpawnerAt(cx, cy, selectedColor);
         simulation.redraw();
       } else if (mode === "paint") {
         isPaintingRef.current = true;

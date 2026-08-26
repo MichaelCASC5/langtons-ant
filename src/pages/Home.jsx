@@ -26,10 +26,7 @@ export default function Home() {
   const [selectedColor, setSelectedColor] = useState(1);
   const [isSettingsOpen, setSettingsOpen] = useState(false);
   const [isInfoOpen, setInfoOpen] = useState(false);
-// console.log("state:")
-// console.log(selectedState)
-// console.log("color")
-// console.log(selectedColor)
+  
   return (
     <MainLayout>
       <div ref={rootRef} className="relative h-full w-full">

@@ -59,7 +59,7 @@ function ModeIcon({ mode }) {
   const id = mode.id
   const iconPath = mode.icon
 
-  console.log(`ModeIcon() fired. id: ${id}, iconPath: ${iconPath}`)
+  // console.log(`ModeIcon() fired. id: ${id}, iconPath: ${iconPath}`)
   if (id === "pan") {
     return (
       <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2">

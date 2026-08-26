@@ -12,8 +12,6 @@ function key(x, y) {
 
 export function getCell(grid, x, y) {
   const value = grid.get(key(x, y));
-  console.log("getCell:")
-  console.log(value)
   // return value === undefined ? 0 : value[0];
   return value === undefined ? [0,0] : value
 }

@@ -103,16 +103,16 @@ export function useSimulation(canvasRef) {
   }, []);
 
   const addAntAt = useCallback(
-    (x, y) => {
-      addAnt(simRef.current, x, y, null, Math.floor(Math.random() * 5) + 0);
+    (x, y, selectedColor) => {
+      addAnt(simRef.current, x, y, null, selectedColor);
       setAntCount(simRef.current.ants.length);
     },
     []
   );
 
   const addSpawnerAt = useCallback(
-    (x, y) => {
-      addSpawner(simRef.current, x, y, null, Math.floor(Math.random() * 5) + 0);
+    (x, y, selectedColor) => {
+      addSpawner(simRef.current, x, y, selectedColor);
       // setSpawnerCount(simRef.current.ants.length);
     },
     []

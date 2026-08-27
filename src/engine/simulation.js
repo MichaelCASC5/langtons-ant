@@ -19,6 +19,7 @@ export function createSimulation() {
   return {
     grid: createGrid(),
     border: [-100, -100, 100, 100],
+    loopBorder: true,
     ants: [],
     spawners: [],
     rule: DEFAULT_RULE,
@@ -30,6 +31,10 @@ export function createSimulation() {
 export function setRule(sim, rule) {
   const cleaned = rule.toUpperCase().replace(/[^RLNU]/g, "");
   sim.rule = cleaned.length > 0 ? cleaned : DEFAULT_RULE;
+}
+
+export function setLoopBorder(sim, loopBorder) {
+  sim.loopBorder = loopBorder
 }
 
 export function addAnt(sim, x, y, heading = 0, color) {
@@ -137,10 +142,15 @@ export function stepSimulation(sim) {
         ant.color = cell[1]
     }
 
-    // If an ant goes out of bounds, destroy it
+    // If an ant goes out of bounds, destroy it or loop it
     if ((ant.x < sim.border[0] || ant.x > sim.border[2]) || (ant.y < sim.border[1] || ant.y > sim.border[3])) {
-      // removeAntNear(sim, ant.x, ant.y)
-      loopAntNear(sim, ant.x, ant.y)
+
+      if (sim.loopBorder) {
+        loopAntNear(sim, ant.x, ant.y)
+      } else {
+        removeAntNear(sim, ant.x, ant.y)
+      }
+      
     }
   }
 

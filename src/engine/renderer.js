@@ -13,6 +13,14 @@ export function drawFrame(ctx, canvas, sim, camera) {
   ctx.fillStyle = BACKGROUND;
   ctx.fillRect(0, 0, width, height);
 
+  // Draw the border of the simulation
+  const { px: topLeftX, py: topLeftY } = gridToScreen(camera, width, height, sim.border[0], sim.border[1]);
+  const { px: bottomRightX, py: bottomRightY } = gridToScreen(camera, width, height, sim.border[2] + 1, sim.border[3] + 1);
+  ctx.strokeStyle = "white"
+  ctx.setLineDash([sim.loopBorder == true ? 7: 0]);
+  ctx.strokeRect(Math.floor(topLeftX), Math.floor(topLeftY), bottomRightX - topLeftX, bottomRightY - topLeftY);
+  ctx.setLineDash([]);
+
   // Faint grid lines only render once cells are big enough to be worth
   // showing — at low zoom they'd just be visual noise.
   if (size >= 6) {

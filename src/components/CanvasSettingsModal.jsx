@@ -1,8 +1,10 @@
 // Presentational modal. Props:
 //   open, onClose
 //   rule, onRuleChange: the turn-rule string, e.g. "RL" or "RLLR"
-export default function CanvasSettingsModal({ open, onClose, rule, onRuleChange }) {
+export default function CanvasSettingsModal({ open, onClose, rule, onRuleChange, loopBorder, onLoopBorderChange }) {
   if (!open) return null;
+
+  console.log(`loopBorder: ${loopBorder}`)
 
   return (
     <div
@@ -41,6 +43,18 @@ export default function CanvasSettingsModal({ open, onClose, rule, onRuleChange 
           Each letter is a turn for one cell state: R = turn right, L = turn left. "RL" is the
           classic ant. Longer rules like "RLLR" add more colors and behaviors.
         </p>
+
+        <div className="mb-4 flex items-center justify-between">
+          <label className="r-4">Loop border:
+          <input
+            type="checkbox" 
+            name="loop"
+            checked={loopBorder} 
+            onChange={(e) => onLoopBorderChange(e.target.checked)}
+          />
+          </label>
+        </div>
+
       </div>
     </div>
   );

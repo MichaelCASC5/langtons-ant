@@ -1,5 +1,6 @@
 // Presentational modal, reusing the same overlay pattern as
 // ProjectModal.jsx in the main site template. Props: open, onClose
+import { Link } from "react-router-dom";
 export default function InfoModal({ open, onClose }) {
   if (!open) return null;
 
@@ -13,7 +14,7 @@ export default function InfoModal({ open, onClose }) {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="mb-3 flex items-center justify-between">
-          <h2 className="text-base font-medium">Langton's ant</h2>
+          <h2 className="text-base font-medium">Information</h2>
           <button
             type="button"
             aria-label="Close"
@@ -26,16 +27,22 @@ export default function InfoModal({ open, onClose }) {
           </button>
         </div>
         <p className="text-sm leading-relaxed text-white/70">
-          A simple set of rules produces surprisingly complex behavior. An ant sits on a grid.
-          On a white cell, it turns right, flips the cell black, and steps forward. On a black
-          cell, it turns left, flips the cell white, and steps forward. Left alone for a few
-          hundred steps, it eventually builds a repeating diagonal "highway" out of what looked
-          like chaos.
+          Each circle continually produces neutral Langton's ants. These ants become dedicated
+          to whatever color they first encounter; they build that material for the rest of
+          their lives. An ant can "capture" a circle by causing the new ants to fall onto its
+          own color.
         </p>
         <p className="mt-3 text-sm leading-relaxed text-white/70">
-          Drag to pan, scroll to zoom. Use the toolbar to place more ants or paint cells by hand
-          before you press play.
+          Use the toolbar to place more ants or paint cells by hand.
+          The first color in the palette is actually the "neutral" color.
         </p>
+
+        <p className="mt-3 text-sm leading-relaxed text-white/70">
+          <small>
+            contact: <a href="mailto:michaelcalle14@gmail.com">michaelcalle14@gmail.com</a>
+          </small>
+        </p>
+        
       </div>
     </div>
   );

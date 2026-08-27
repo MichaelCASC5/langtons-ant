@@ -70,7 +70,7 @@ export default function Home() {
           </div>
         </div>
 
-        {showHero && <Hero onStart={() => setShowHero(false)} />}
+        {showHero && <Hero onStart={() => {setShowHero(false); simulation.togglePlay()}} />}
         <CanvasSettingsModal
           open={isSettingsOpen}
           onClose={() => setSettingsOpen(false)}

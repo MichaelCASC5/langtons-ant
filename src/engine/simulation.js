@@ -55,8 +55,7 @@ export function setLoopBorder(sim, loopBorder) {
 }
 
 export function setBorder(sim, border) {
-  const array = border.split(',').map(Number);
-
+  const array = border.split(/\s*,\s*(?:,\s*)*/).map(Number);
   sim.border = array
 }
 
@@ -90,7 +89,6 @@ export function addAnt(sim, x, y, heading = 0, color) {
 }
 
 export function addSpawner(sim, x, y, color) {
-  console.log(`addSpawner() fired ${color}`)
   const spawner = createSpawner(x, y, color, false);
   sim.spawners.push(spawner);
   return spawner;
@@ -136,7 +134,8 @@ export function stepSimulation(sim) {
   // Spawn ants perpetually at spawners
   for (const spawner of sim.spawners) {
 
-    if (Math.random() * 100 < 0.005) {
+    // berserk
+    if (Math.random() * 100 < 0.01) {
       spawner.berserk = true
     }
 

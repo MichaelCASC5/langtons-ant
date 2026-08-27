@@ -28,9 +28,9 @@ export default function InfoModal({ open, onClose }) {
         </div>
         <p className="text-sm leading-relaxed text-white/70">
           Each circle continually produces neutral Langton's ants. These ants become dedicated
-          to whatever color they first encounter; they build that material for the rest of
-          their lives. An ant can "capture" a circle by causing the new ants to fall onto its
-          own color.
+          to whatever color they first encounter; they build that color for the rest of
+          their lives. An ant can "capture" a circle by changing what color the new ants fall
+          onto. When two ants of any color collide, one is annihilated.
         </p>
         <p className="mt-3 text-sm leading-relaxed text-white/70">
           Use the toolbar to place more ants or paint cells by hand.

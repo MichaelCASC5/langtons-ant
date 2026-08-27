@@ -32,3 +32,22 @@ export function stepAntLinearly(ant) {
   // ant.x += 0;
   ant.y += 1;
 }
+
+export function loopAntNear(sim, x, y) {
+  const index = sim.ants.findIndex((a) => a.x === x && a.y === y);
+  const ant = sim.ants[index]
+
+  if (ant.x < sim.border[0]) {
+    ant.x = sim.border[2]
+  }
+  if (ant.y < sim.border[1]) {
+    ant.y = sim.border[3]
+  }
+  
+  if (ant.x > sim.border[2]) {
+    ant.x = sim.border[0]
+  }
+  if (ant.y > sim.border[3]) {
+    ant.y = sim.border[1]
+  }
+}

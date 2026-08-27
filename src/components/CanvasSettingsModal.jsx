@@ -1,9 +1,10 @@
 // Presentational modal. Props:
 //   open, onClose
 //   rule, onRuleChange: the turn-rule string, e.g. "RL" or "RLLR"
-export default function CanvasSettingsModal({ open, onClose, rule, onRuleChange, loopBorder, onLoopBorderChange, border, onBorderChange, antSpawnRate, onAntSpawnRateChange, spawnerSpawnRate, onSpawnerSpawnRateChange}) {
+export default function CanvasSettingsModal({ open, onClose, rule, onRuleChange, loopBorder, onLoopBorderChange, border, onBorderChange, antSpawnRate, onAntSpawnRateChange, spawnerSpawnRate, onSpawnerSpawnRateChange, spawnerMove, onSpawnerMoveChange}) {
   if (!open) return null;
-
+  console.log(`loopBorder: ${loopBorder}`)
+  console.log(spawnerMove)
   return (
     <div
       className="pointer-events-auto fixed inset-0 z-20 flex items-center justify-center bg-black/50"
@@ -63,6 +64,9 @@ export default function CanvasSettingsModal({ open, onClose, rule, onRuleChange,
           />
           </label>
         </div>
+        <p className="mt-2 text-xs leading-relaxed text-white/40">
+          Only affects ants.
+        </p>
 
         <label className="block text-xs text-white/60">
           Ant Spawn Rate %
@@ -94,6 +98,17 @@ export default function CanvasSettingsModal({ open, onClose, rule, onRuleChange,
         <p className="mt-2 text-xs leading-relaxed text-white/40">
           Set to 0 for a blank canvas
         </p>
+
+        <div className="mb-4 flex items-center justify-between">
+          <label className="r-4">Spawners Move:
+          <input
+            type="checkbox" 
+            name="loop"
+            checked={spawnerMove} 
+            onChange={(e) => onSpawnerMoveChange(e.target.checked)}
+          />
+          </label>
+        </div>
 
       </div>
     </div>

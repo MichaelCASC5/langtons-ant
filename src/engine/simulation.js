@@ -1,6 +1,6 @@
 import { createGrid, getCell, setCell, clearGrid } from "./grid.js";
-import { createAnt, turnAnt, stepAntForward, stepAntLinearly } from "./ant.js";
-import { createSpawner } from "./spawner.js";
+import { createAnt, turnAnt, stepAntForward, stepAntLinearly, loopAntNear } from "./ant.js";
+import { createSpawner, loopSpawnerNear, stepSpawnerRandomly } from "./spawner.js";
 
 // A palette of state colors. Index 0 is always "empty" and is never
 // drawn (the canvas background shows through). Extend this array to
@@ -21,6 +21,8 @@ export const DEFAULT_ANT_SPAWNRATE = 1.0
 
 export const DEFAULT_SPAWNER_SPAWNRATE = 0.02
 
+export const DEFAULT_SPAWNER_MOVE = true
+
 export function createSimulation() {
   return {
     grid: createGrid(),
@@ -30,6 +32,7 @@ export function createSimulation() {
     antSpawnRate: DEFAULT_ANT_SPAWNRATE,
     spawners: [],
     spawnerSpawnRate: DEFAULT_SPAWNER_SPAWNRATE,
+    spawnersMove: DEFAULT_SPAWNER_MOVE,
     rule: DEFAULT_RULE,
     colors: DEFAULT_COLORS,
     stepCount: 0,
@@ -59,6 +62,10 @@ export function setSpawnerSpawnRate(sim, spawnerSpawnRate) {
   sim.spawnerSpawnRate = Number(spawnerSpawnRate)
 }
 
+export function setSpawnerMove(sim, spawnerMove) {
+  sim.spawnersMove = spawnerMove
+}
+
 export function addAnt(sim, x, y, heading = 0, color) {
   const ant = createAnt(x, y, heading, color);
   sim.ants.push(ant);
@@ -66,7 +73,7 @@ export function addAnt(sim, x, y, heading = 0, color) {
 }
 
 export function addSpawner(sim, x, y, color) {
-  const spawner = createSpawner(x, y, color);
+  const spawner = createSpawner(x, y, color, false);
   sim.spawners.push(spawner);
   return spawner;
 }
@@ -74,25 +81,6 @@ export function addSpawner(sim, x, y, color) {
 export function removeAntNear(sim, x, y) {
   const index = sim.ants.findIndex((a) => a.x === x && a.y === y);
   if (index !== -1) sim.ants.splice(index, 1);
-}
-
-export function loopAntNear(sim, x, y) {
-  const index = sim.ants.findIndex((a) => a.x === x && a.y === y);
-  const ant = sim.ants[index]
-
-  if (ant.x < sim.border[0]) {
-    ant.x = sim.border[2]
-  }
-  if (ant.y < sim.border[1]) {
-    ant.y = sim.border[3]
-  }
-  
-  if (ant.x > sim.border[2]) {
-    ant.x = sim.border[0]
-  }
-  if (ant.y > sim.border[3]) {
-    ant.y = sim.border[1]
-  }
 }
 
 export function removeAntDuplicates(sim) {
@@ -129,6 +117,10 @@ export function stepSimulation(sim) {
   // Spawn ants perpetually at spawners
   for (const spawner of sim.spawners) {
 
+    if (Math.random() * 100 < 0.001) {
+      spawner.berserk = true
+    }
+
     if (Math.random() * 100 < sim.antSpawnRate) {
 
       // Only the first ant emited by a colored spawner has a color. The spawner then emits neutral ants afterwards
@@ -139,6 +131,14 @@ export function stepSimulation(sim) {
       }
 
       addAnt(sim, spawner.x, spawner.y, null, spawnColor)
+    }
+
+    if (sim.spawnersMove)
+      stepSpawnerRandomly(spawner)
+
+    // If a spawner goes out of bounds, loop it
+    if ((spawner.x < sim.border[0] || spawner.x > sim.border[2]) || (spawner.y < sim.border[1] || spawner.y > sim.border[3])) {
+      loopSpawnerNear(sim, spawner.x, spawner.y)
     }
   }
 

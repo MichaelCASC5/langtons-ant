@@ -12,11 +12,13 @@ import {
   setAntSpawnRate,
   setSpawnerSpawnRate,
   setSpawnerMove,
+  setColorSpawn,
   DEFAULT_RULE,
   DEFAULT_BORDER,
   DEFAULT_ANT_SPAWNRATE,
   DEFAULT_SPAWNER_SPAWNRATE,
   DEFAULT_SPAWNER_MOVE,
+  DEFAULT_COLOR_SPAWN,
 } from "../engine/simulation.js";
 import { createCamera } from "../engine/camera.js";
 import { drawFrame } from "../engine/renderer.js";
@@ -50,6 +52,7 @@ export function useSimulation(canvasRef) {
   const [antSpawnRate, setAntSpawnRateState] = useState(DEFAULT_ANT_SPAWNRATE);
   const [spawnerSpawnRate, setSpawnerSpawnRateState] = useState(DEFAULT_SPAWNER_SPAWNRATE);
   const [spawnerMove, setSpawnerMoveState] = useState(DEFAULT_SPAWNER_MOVE);
+  const [colorSpawn, setColorSpawnState] = useState(DEFAULT_COLOR_SPAWN);
 
   const redraw = useCallback(() => {
     const canvas = canvasRef.current;
@@ -141,6 +144,11 @@ export function useSimulation(canvasRef) {
     setSpawnerMoveState(simRef.current.spawnerMove);
   }, []);
 
+  const changeColorSpawn = useCallback((value) => {
+    setColorSpawn(simRef.current, value);
+    setColorSpawnState(simRef.current.colorSpawn);
+  }, []);
+
   const addAntAt = useCallback(
     (x, y, selectedColor) => {
       addAnt(simRef.current, x, y, null, selectedColor);
@@ -174,6 +182,7 @@ export function useSimulation(canvasRef) {
     antSpawnRate,
     spawnerSpawnRate,
     spawnerMove,
+    colorSpawn,
     colors: simRef.current.colors,
     play,
     pause,
@@ -187,6 +196,7 @@ export function useSimulation(canvasRef) {
     changeAntSpawnRate,
     changeSpawnerSpawnRate,
     changeSpawnerMove,
+    changeColorSpawn,
     addAntAt,
     addSpawnerAt,
     paintCellAt,

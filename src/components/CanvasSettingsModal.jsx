@@ -1,10 +1,9 @@
 // Presentational modal. Props:
 //   open, onClose
 //   rule, onRuleChange: the turn-rule string, e.g. "RL" or "RLLR"
-export default function CanvasSettingsModal({ open, onClose, rule, onRuleChange, loopBorder, onLoopBorderChange, border, onBorderChange, antSpawnRate, onAntSpawnRateChange, spawnerSpawnRate, onSpawnerSpawnRateChange, spawnerMove, onSpawnerMoveChange}) {
+export default function CanvasSettingsModal({ open, onClose, rule, onRuleChange, loopBorder, onLoopBorderChange, border, onBorderChange, antSpawnRate, onAntSpawnRateChange, spawnerSpawnRate, onSpawnerSpawnRateChange, spawnerMove, onSpawnerMoveChange, colorSpawn, onColorSpawnChange}) {
   if (!open) return null;
-  console.log(`loopBorder: ${loopBorder}`)
-  console.log(spawnerMove)
+  
   return (
     <div
       className="pointer-events-auto fixed inset-0 z-20 flex items-center justify-center bg-black/50"
@@ -39,8 +38,7 @@ export default function CanvasSettingsModal({ open, onClose, rule, onRuleChange,
           />
         </label>
         <p className="mt-2 text-xs leading-relaxed text-white/40">
-          Each letter is a turn for one cell state: R = turn right, L = turn left. "RL" is the
-          classic ant. Longer rules like "RLLR" add more behaviors.
+          "RL" is the classic ant. Longer rules like "RLLR" add more behaviors.
         </p>
 
         <label className="block text-xs text-white/60">
@@ -109,6 +107,20 @@ export default function CanvasSettingsModal({ open, onClose, rule, onRuleChange,
           />
           </label>
         </div>
+
+        <label className="block text-xs text-white/60">
+          Amount of Colors to Spawn
+          <input
+            id="float-input"
+            type="number"
+            step="any"
+            inputMode="decimal"
+            value={colorSpawn}
+            onChange={(e) => onColorSpawnChange(e.target.value)}
+            placeholder="1.0"
+            className="mt-1 w-full rounded-md border border-white/15 bg-black/40 px-2 py-1.5 text-sm text-white outline-none focus:border-white/40"
+          />
+        </label>
 
       </div>
     </div>

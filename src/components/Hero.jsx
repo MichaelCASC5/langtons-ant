@@ -6,10 +6,9 @@ export default function Hero({ onStart }) {
   return (
     <div className="pointer-events-auto absolute inset-0 z-30 flex items-center justify-center bg-black/80 backdrop-blur-sm">
       <div className="max-w-md px-6 text-center text-white">
-        <h1 className="text-3xl font-medium">Langton's ant</h1>
+        <h1 className="text-3xl font-medium">Langton's Ant War</h1>
         <p className="mt-3 text-sm leading-relaxed text-white/70">
-          A minimal simulation that turns a few lines of rules into emergent, unpredictable
-          patterns. Place ants, paint the board, and watch it unfold.
+          Watch factions of Langton's ants compete for territory and resources. Explore the tools and settings to interact with the simulation.
         </p>
         <button
           type="button"

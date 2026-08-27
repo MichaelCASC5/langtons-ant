@@ -86,6 +86,8 @@ export default function Home() {
           onSpawnerSpawnRateChange={simulation.changeSpawnerSpawnRate}
           spawnerMove={simulation.spawnerMove}
           onSpawnerMoveChange={simulation.changeSpawnerMove}
+          colorSpawn={simulation.colorSpawn}
+          onColorSpawnChange={simulation.changeColorSpawn}
         />
         <InfoModal open={isInfoOpen} onClose={() => setInfoOpen(false)} />
       </div>

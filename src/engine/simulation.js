@@ -11,6 +11,9 @@ export const DEFAULT_COLORS = [
   "#D85A30", // 2: coral
   "#185FA5", // 3: blue
   "#854F0B", // 4: amber
+  "#C41E3A", // 5: cardinal
+  "#FF007F", // 6: rose
+  "#E49B0F", // 7: brass
 ];
 
 export const DEFAULT_RULE = "RL"; // classic two-state Langton's Ant
@@ -23,6 +26,8 @@ export const DEFAULT_SPAWNER_SPAWNRATE = 0.02
 
 export const DEFAULT_SPAWNER_MOVE = true
 
+export const DEFAULT_COLOR_SPAWN = 4
+
 export function createSimulation() {
   return {
     grid: createGrid(),
@@ -32,7 +37,8 @@ export function createSimulation() {
     antSpawnRate: DEFAULT_ANT_SPAWNRATE,
     spawners: [],
     spawnerSpawnRate: DEFAULT_SPAWNER_SPAWNRATE,
-    spawnersMove: DEFAULT_SPAWNER_MOVE,
+    spawnerMove: DEFAULT_SPAWNER_MOVE,
+    colorSpawn: DEFAULT_COLOR_SPAWN,
     rule: DEFAULT_RULE,
     colors: DEFAULT_COLORS,
     stepCount: 0,
@@ -63,7 +69,18 @@ export function setSpawnerSpawnRate(sim, spawnerSpawnRate) {
 }
 
 export function setSpawnerMove(sim, spawnerMove) {
-  sim.spawnersMove = spawnerMove
+  sim.spawnerMove = spawnerMove
+}
+
+export function setColorSpawn(sim, colorSpawn) {
+
+  if (colorSpawn > DEFAULT_COLORS.length - 1) {
+    colorSpawn = DEFAULT_COLORS.length - 1
+  } else if (colorSpawn < 0) {
+    colorSpawn = 0
+  }
+
+  sim.colorSpawn = colorSpawn
 }
 
 export function addAnt(sim, x, y, heading = 0, color) {
@@ -73,6 +90,7 @@ export function addAnt(sim, x, y, heading = 0, color) {
 }
 
 export function addSpawner(sim, x, y, color) {
+  console.log(`addSpawner() fired ${color}`)
   const spawner = createSpawner(x, y, color, false);
   sim.spawners.push(spawner);
   return spawner;
@@ -108,6 +126,7 @@ export function resetSimulation(sim) {
 // the cell it's standing on, turns according to the rule for that
 // state, flips the cell to the next state, then moves forward.
 export function stepSimulation(sim) {
+
   if (sim.stepCount == 0) {
     generateSpawners(sim)
   }
@@ -117,7 +136,7 @@ export function stepSimulation(sim) {
   // Spawn ants perpetually at spawners
   for (const spawner of sim.spawners) {
 
-    if (Math.random() * 100 < 0.001) {
+    if (Math.random() * 100 < 0.005) {
       spawner.berserk = true
     }
 
@@ -133,7 +152,7 @@ export function stepSimulation(sim) {
       addAnt(sim, spawner.x, spawner.y, null, spawnColor)
     }
 
-    if (sim.spawnersMove)
+    if (sim.spawnerMove)
       stepSpawnerRandomly(spawner)
 
     // If a spawner goes out of bounds, loop it
@@ -184,7 +203,8 @@ function generateSpawners(sim) {
     for (let j = sim.border[1]; j < sim.border[3]; j++) {
 
       if (Math.random() * 100 < sim.spawnerSpawnRate) {
-        addSpawner(sim, i, j, Math.floor(Math.random() * DEFAULT_COLORS.length) + 1)
+        // The conditional operator has to do with a quirk on how the colors work. The first color is not technically a simulation color
+        addSpawner(sim, i, j, Math.floor(Math.random() * (sim.colorSpawn == 0 ? -1 : sim.colorSpawn)) + 1)
       }
 
     }

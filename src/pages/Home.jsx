@@ -27,9 +27,6 @@ export default function Home() {
   const [isSettingsOpen, setSettingsOpen] = useState(false);
   const [isInfoOpen, setInfoOpen] = useState(false);
 
-  console.log(`Home.jsx simulation rule: ${simulation.rule}`)
-  console.log(`Home.jsx loopBorder: ${simulation.loopBorder}`)
-
   return (
     <MainLayout>
       <div ref={rootRef} className="relative h-full w-full">
@@ -81,6 +78,8 @@ export default function Home() {
           onRuleChange={simulation.changeRule}
           loopBorder={simulation.loopBorder}
           onLoopBorderChange={simulation.changeLoopBorder}
+          border={simulation.border}
+          onBorderChange={simulation.changeBorder}
         />
         <InfoModal open={isInfoOpen} onClose={() => setInfoOpen(false)} />
       </div>

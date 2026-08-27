@@ -1,10 +1,8 @@
 // Presentational modal. Props:
 //   open, onClose
 //   rule, onRuleChange: the turn-rule string, e.g. "RL" or "RLLR"
-export default function CanvasSettingsModal({ open, onClose, rule, onRuleChange, loopBorder, onLoopBorderChange }) {
+export default function CanvasSettingsModal({ open, onClose, rule, onRuleChange, loopBorder, onLoopBorderChange, border, onBorderChange }) {
   if (!open) return null;
-
-  console.log(`loopBorder: ${loopBorder}`)
 
   return (
     <div
@@ -44,8 +42,19 @@ export default function CanvasSettingsModal({ open, onClose, rule, onRuleChange,
           classic ant. Longer rules like "RLLR" add more colors and behaviors.
         </p>
 
+        <label className="block text-xs text-white/60">
+          Border dimension
+          <input
+            type="text"
+            value={border}
+            onChange={(e) => onBorderChange(e.target.value)}
+            placeholder="insert border"
+            className="mt-1 w-full rounded-md border border-white/15 bg-black/40 px-2 py-1.5 text-sm text-white outline-none focus:border-white/40"
+          />
+        </label>
+
         <div className="mb-4 flex items-center justify-between">
-          <label className="r-4">Loop border:
+          <label className="r-4">Edge Wrapping:
           <input
             type="checkbox" 
             name="loop"

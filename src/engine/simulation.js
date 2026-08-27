@@ -15,10 +15,12 @@ export const DEFAULT_COLORS = [
 
 export const DEFAULT_RULE = "RL"; // classic two-state Langton's Ant
 
+export const DEFAULT_BORDER = [-150, -100, 150, 100]
+
 export function createSimulation() {
   return {
     grid: createGrid(),
-    border: [-100, -100, 100, 100],
+    border: DEFAULT_BORDER,
     loopBorder: true,
     ants: [],
     spawners: [],
@@ -35,6 +37,12 @@ export function setRule(sim, rule) {
 
 export function setLoopBorder(sim, loopBorder) {
   sim.loopBorder = loopBorder
+}
+
+export function setBorder(sim, border) {
+  const array = border.split(',').map(Number);
+
+  sim.border = array
 }
 
 export function addAnt(sim, x, y, heading = 0, color) {
@@ -99,7 +107,6 @@ export function resetSimulation(sim) {
 // state, flips the cell to the next state, then moves forward.
 export function stepSimulation(sim) {
   if (sim.stepCount == 0) {
-    console.log("stepCount is 0")
     generateSpawners(sim)
   }
   
@@ -158,7 +165,6 @@ export function stepSimulation(sim) {
 }
 
 function generateSpawners(sim) {
-  console.log("generateSpawners() fired")
 
   for (let i = sim.border[0]; i < sim.border[2]; i++) {
     for (let j = sim.border[1]; j < sim.border[3]; j++) {

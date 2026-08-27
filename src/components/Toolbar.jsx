@@ -36,7 +36,7 @@ export default function Toolbar({ mode, onModeChange, colors, selectedColor, onS
           <div className="mx-1 h-5 w-px bg-white/15" />
           {colors.map((color, i) => {
             const colorIndex = i;
-            console.log(colorIndex)
+
             return (
               <button
                 key={colorIndex}
@@ -60,7 +60,6 @@ function ModeIcon({ mode }) {
   const id = mode.id
   const iconPath = mode.icon
 
-  // console.log(`ModeIcon() fired. id: ${id}, iconPath: ${iconPath}`)
   if (id === "pan") {
     return (
       <svg viewBox="3 3 20 20" className="h-4 w-4" fill="transparent" stroke="white" strokeWidth="2">

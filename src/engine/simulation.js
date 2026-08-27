@@ -19,6 +19,8 @@ export const DEFAULT_BORDER = [-150, -100, 150, 100]
 
 export const DEFAULT_ANT_SPAWNRATE = 1.0
 
+export const DEFAULT_SPAWNER_SPAWNRATE = 0.02
+
 export function createSimulation() {
   return {
     grid: createGrid(),
@@ -27,6 +29,7 @@ export function createSimulation() {
     ants: [],
     antSpawnRate: DEFAULT_ANT_SPAWNRATE,
     spawners: [],
+    spawnerSpawnRate: DEFAULT_SPAWNER_SPAWNRATE,
     rule: DEFAULT_RULE,
     colors: DEFAULT_COLORS,
     stepCount: 0,
@@ -50,6 +53,10 @@ export function setBorder(sim, border) {
 
 export function setAntSpawnRate(sim, antSpawnRate) {
   sim.antSpawnRate = Number(antSpawnRate)
+}
+
+export function setSpawnerSpawnRate(sim, spawnerSpawnRate) {
+  sim.spawnerSpawnRate = Number(spawnerSpawnRate)
 }
 
 export function addAnt(sim, x, y, heading = 0, color) {
@@ -176,7 +183,7 @@ function generateSpawners(sim) {
   for (let i = sim.border[0]; i < sim.border[2]; i++) {
     for (let j = sim.border[1]; j < sim.border[3]; j++) {
 
-      if (Math.random() * 100 < 0.02) {
+      if (Math.random() * 100 < sim.spawnerSpawnRate) {
         addSpawner(sim, i, j, Math.floor(Math.random() * DEFAULT_COLORS.length) + 1)
       }
 

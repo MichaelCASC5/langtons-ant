@@ -1,7 +1,7 @@
 // Presentational modal. Props:
 //   open, onClose
 //   rule, onRuleChange: the turn-rule string, e.g. "RL" or "RLLR"
-export default function CanvasSettingsModal({ open, onClose, rule, onRuleChange, loopBorder, onLoopBorderChange, border, onBorderChange, antSpawnRate, onAntSpawnRateChange}) {
+export default function CanvasSettingsModal({ open, onClose, rule, onRuleChange, loopBorder, onLoopBorderChange, border, onBorderChange, antSpawnRate, onAntSpawnRateChange, spawnerSpawnRate, onSpawnerSpawnRateChange}) {
   if (!open) return null;
 
   return (
@@ -39,7 +39,7 @@ export default function CanvasSettingsModal({ open, onClose, rule, onRuleChange,
         </label>
         <p className="mt-2 text-xs leading-relaxed text-white/40">
           Each letter is a turn for one cell state: R = turn right, L = turn left. "RL" is the
-          classic ant. Longer rules like "RLLR" add more colors and behaviors.
+          classic ant. Longer rules like "RLLR" add more behaviors.
         </p>
 
         <label className="block text-xs text-white/60">
@@ -77,6 +77,23 @@ export default function CanvasSettingsModal({ open, onClose, rule, onRuleChange,
             className="mt-1 w-full rounded-md border border-white/15 bg-black/40 px-2 py-1.5 text-sm text-white outline-none focus:border-white/40"
           />
         </label>
+
+        <label className="block text-xs text-white/60">
+          Spawner Spawn Rate %
+          <input
+            id="float-input"
+            type="number"
+            step="any"
+            inputMode="decimal"
+            value={spawnerSpawnRate}
+            onChange={(e) => onSpawnerSpawnRateChange(e.target.value)}
+            placeholder="1.0"
+            className="mt-1 w-full rounded-md border border-white/15 bg-black/40 px-2 py-1.5 text-sm text-white outline-none focus:border-white/40"
+          />
+        </label>
+        <p className="mt-2 text-xs leading-relaxed text-white/40">
+          Set to 0 for a blank canvas
+        </p>
 
       </div>
     </div>

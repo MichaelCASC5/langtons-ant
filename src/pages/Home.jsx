@@ -23,7 +23,7 @@ export default function Home() {
   const [showHero, setShowHero] = useState(true);
   const [mode, setMode] = useState("place-ant"); // decides what mode to start with
   const [selectedState, setSelectedState] = useState(1);
-  const [selectedColor, setSelectedColor] = useState(1);
+  const [selectedColor, setSelectedColor] = useState(0);
   const [isSettingsOpen, setSettingsOpen] = useState(false);
   const [isInfoOpen, setInfoOpen] = useState(false);
 
@@ -82,6 +82,8 @@ export default function Home() {
           onBorderChange={simulation.changeBorder}
           antSpawnRate={simulation.antSpawnRate}
           onAntSpawnRateChange={simulation.changeAntSpawnRate}
+          spawnerSpawnRate={simulation.spawnerSpawnRate}
+          onSpawnerSpawnRateChange={simulation.changeSpawnerSpawnRate}
         />
         <InfoModal open={isInfoOpen} onClose={() => setInfoOpen(false)} />
       </div>

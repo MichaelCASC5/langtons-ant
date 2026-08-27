@@ -9,8 +9,10 @@ import {
   setRule,
   setLoopBorder,
   setBorder,
+  setAntSpawnRate,
   DEFAULT_RULE,
   DEFAULT_BORDER,
+  DEFAULT_ANT_SPAWNRATE,
 } from "../engine/simulation.js";
 import { createCamera } from "../engine/camera.js";
 import { drawFrame } from "../engine/renderer.js";
@@ -41,6 +43,7 @@ export function useSimulation(canvasRef) {
   const [rule, setRuleState] = useState(DEFAULT_RULE);
   const [loopBorder, setLoopBorderState] = useState(true);
   const [border, setBorderState] = useState(DEFAULT_BORDER);
+  const [antSpawnRate, setAntSpawnRateState] = useState(DEFAULT_ANT_SPAWNRATE);
 
   const redraw = useCallback(() => {
     const canvas = canvasRef.current;
@@ -117,6 +120,11 @@ export function useSimulation(canvasRef) {
     setBorderState(simRef.current.border);
   }, []);
 
+  const changeAntSpawnRate = useCallback((value) => {
+    setAntSpawnRate(simRef.current, value);
+    setAntSpawnRateState(simRef.current.antSpawnRate);
+  }, []);
+
   const addAntAt = useCallback(
     (x, y, selectedColor) => {
       addAnt(simRef.current, x, y, null, selectedColor);
@@ -147,6 +155,7 @@ export function useSimulation(canvasRef) {
     rule,
     loopBorder,
     border,
+    antSpawnRate,
     colors: simRef.current.colors,
     play,
     pause,
@@ -157,6 +166,7 @@ export function useSimulation(canvasRef) {
     changeRule,
     changeLoopBorder,
     changeBorder,
+    changeAntSpawnRate,
     addAntAt,
     addSpawnerAt,
     paintCellAt,

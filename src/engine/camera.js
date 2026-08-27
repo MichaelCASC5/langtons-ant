@@ -5,7 +5,7 @@ export function createCamera(baseCellSize = 18) {
   return {
     x: 0, // grid coordinate currently at the center of the screen
     y: 0,
-    zoom: 1,
+    zoom: 0.2,
     baseCellSize, // pixels per cell at zoom = 1
   };
 }

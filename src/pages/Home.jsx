@@ -80,6 +80,8 @@ export default function Home() {
           onLoopBorderChange={simulation.changeLoopBorder}
           border={simulation.border}
           onBorderChange={simulation.changeBorder}
+          antSpawnRate={simulation.antSpawnRate}
+          onAntSpawnRateChange={simulation.changeAntSpawnRate}
         />
         <InfoModal open={isInfoOpen} onClose={() => setInfoOpen(false)} />
       </div>

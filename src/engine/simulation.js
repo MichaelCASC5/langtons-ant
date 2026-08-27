@@ -17,12 +17,15 @@ export const DEFAULT_RULE = "RL"; // classic two-state Langton's Ant
 
 export const DEFAULT_BORDER = [-150, -100, 150, 100]
 
+export const DEFAULT_ANT_SPAWNRATE = 1.0
+
 export function createSimulation() {
   return {
     grid: createGrid(),
     border: DEFAULT_BORDER,
     loopBorder: true,
     ants: [],
+    antSpawnRate: DEFAULT_ANT_SPAWNRATE,
     spawners: [],
     rule: DEFAULT_RULE,
     colors: DEFAULT_COLORS,
@@ -43,6 +46,10 @@ export function setBorder(sim, border) {
   const array = border.split(',').map(Number);
 
   sim.border = array
+}
+
+export function setAntSpawnRate(sim, antSpawnRate) {
+  sim.antSpawnRate = Number(antSpawnRate)
 }
 
 export function addAnt(sim, x, y, heading = 0, color) {
@@ -115,7 +122,7 @@ export function stepSimulation(sim) {
   // Spawn ants perpetually at spawners
   for (const spawner of sim.spawners) {
 
-    if (Math.floor(Math.random() * 100) < 1) {
+    if (Math.random() * 100 < sim.antSpawnRate) {
 
       // Only the first ant emited by a colored spawner has a color. The spawner then emits neutral ants afterwards
       let spawnColor = 0

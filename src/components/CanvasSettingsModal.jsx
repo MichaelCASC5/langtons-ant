@@ -1,7 +1,7 @@
 // Presentational modal. Props:
 //   open, onClose
 //   rule, onRuleChange: the turn-rule string, e.g. "RL" or "RLLR"
-export default function CanvasSettingsModal({ open, onClose, rule, onRuleChange, loopBorder, onLoopBorderChange, border, onBorderChange }) {
+export default function CanvasSettingsModal({ open, onClose, rule, onRuleChange, loopBorder, onLoopBorderChange, border, onBorderChange, antSpawnRate, onAntSpawnRateChange}) {
   if (!open) return null;
 
   return (
@@ -63,6 +63,20 @@ export default function CanvasSettingsModal({ open, onClose, rule, onRuleChange,
           />
           </label>
         </div>
+
+        <label className="block text-xs text-white/60">
+          Ant Spawn Rate %
+          <input
+            id="float-input"
+            type="number"
+            step="any"
+            inputMode="decimal"
+            value={antSpawnRate}
+            onChange={(e) => onAntSpawnRateChange(e.target.value)}
+            placeholder="1.0"
+            className="mt-1 w-full rounded-md border border-white/15 bg-black/40 px-2 py-1.5 text-sm text-white outline-none focus:border-white/40"
+          />
+        </label>
 
       </div>
     </div>

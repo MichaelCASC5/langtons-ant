@@ -4,5 +4,5 @@
 // rather than reintroducing a header bar here, since a persistent
 // header would eat into canvas space on every visit.
 export default function MainLayout({ children }) {
-  return <div className="fixed inset-0 h-screen w-screen overflow-hidden bg-neutral-900">{children}</div>;
+  return <div className="fixed inset-0 overflow-hidden bg-neutral-900">{children}</div>;
 }
